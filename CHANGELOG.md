@@ -4,6 +4,9 @@
 
 First version, for Open API v1 (spec 1.2.0). The history below records the changes made before the first release.
 
+- Published on PyPI as `tmailor-sdk` (the name `tmailor` belongs to an unrelated project). The import name
+  (`import tmailor`) and the `tmailor` command are unchanged.
+
 - `Client` and `AsyncClient`: `health`, `me`, `domains`, `usage`, `mailboxes.create/list/list_page`,
   `mailbox(token)`.
 - `Mailbox`: `info`, `messages` (auto-paginating), `messages_page`, `message` (marks the message as read),

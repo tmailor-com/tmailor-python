@@ -17,8 +17,11 @@ end-to-end sign-up tests, OTP and verification-message checks in QA pipelines, a
 ## Install
 
 ```bash
-pip install tmailor
+pip install tmailor-sdk
 ```
+
+The package is published as `tmailor-sdk`; the module you import is `tmailor`, and the command-line tool is
+`tmailor`.
 
 ## Setup
 

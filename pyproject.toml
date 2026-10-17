@@ -3,7 +3,7 @@ requires = ["hatchling>=1.18"]
 build-backend = "hatchling.build"
 
 [project]
-name = "tmailor"
+name = "tmailor-sdk"
 dynamic = ["version"]
 description = "Python SDK for the Tmailor Open API: create temporary email addresses and read incoming messages."
 readme = "README.md"
