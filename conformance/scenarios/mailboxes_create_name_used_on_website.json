@@ -1,0 +1,59 @@
+{
+  "id": "mailboxes_create_name_used_on_website",
+  "description": "A name on your own domain that was created on the tmailor.com website or mobile app: 409 MailboxExists with its own message, not retried.",
+  "call": {
+    "op": "mailboxes.create",
+    "args": {
+      "domain": "mail.example.com",
+      "name": "signup"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "domain": "mail.example.com",
+          "name": "signup"
+        }
+      },
+      "response": {
+        "status": 409,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "error": {
+            "code": "MailboxExists",
+            "message": "This address was created on the website or mobile app and cannot be used through the API. Pick another name",
+            "description": "This address already has an active mailbox.",
+            "request_id": "3f2a9c1d7e5b4a6e"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "MailboxExists",
+      "code": "MailboxExists",
+      "status": 409,
+      "message": "This address was created on the website or mobile app and cannot be used through the API. Pick another name",
+      "request_id": "3f2a9c1d7e5b4a6e"
+    },
+    "sleep_count": 0
+  }
+}

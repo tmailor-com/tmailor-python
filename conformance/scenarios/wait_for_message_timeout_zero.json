@@ -1,0 +1,24 @@
+{
+  "id": "wait_for_message_timeout_zero",
+  "description": "Review 17e SDK-01: timeout 0 raises WaitTimeout before any request is sent.",
+  "clock": {
+    "wall_start": 1760342400
+  },
+  "call": {
+    "op": "mailbox.wait_for_message",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "timeout": 0
+    }
+  },
+  "exchanges": [],
+  "expect": {
+    "error": {
+      "class": "WaitTimeout",
+      "code": "WaitTimeout",
+      "status": null
+    },
+    "sleeps": [],
+    "elapsed_max": 0
+  }
+}

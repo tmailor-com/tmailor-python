@@ -1,0 +1,106 @@
+{
+  "id": "mailboxes_list_cursor_repeat",
+  "description": "Review 17d SDK-02: the API returns the same cursor again. The iterator stops with InvalidResponse instead of looping.",
+  "call": {
+    "op": "mailboxes.list",
+    "args": {
+      "page_size": 1
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {
+          "limit": "1"
+        },
+        "json": null
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "email": "a1@example.net",
+              "domain": "example.net",
+              "is_user_domain": false,
+              "custom_name": false,
+              "created_at": 1760342400,
+              "message_count": 0,
+              "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+              "web": {
+                "accesstoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+                "transfertoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-transfer.sig",
+                "reuse_url": "https://tmailor.com/reuse-temp-mail-address#accesstoken/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+              }
+            }
+          ],
+          "next_cursor": "c1"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {
+          "limit": "1",
+          "cursor": "c1"
+        },
+        "json": null
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "email": "a2@example.net",
+              "domain": "example.net",
+              "is_user_domain": false,
+              "custom_name": false,
+              "created_at": 1760342400,
+              "message_count": 0,
+              "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-B.sig",
+              "web": {
+                "accesstoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-B.sig",
+                "transfertoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-transfer.sig",
+                "reuse_url": "https://tmailor.com/reuse-temp-mail-address#accesstoken/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-B.sig"
+              }
+            }
+          ],
+          "next_cursor": "c1"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "InvalidResponse",
+      "code": "InvalidResponse",
+      "status": null
+    }
+  }
+}

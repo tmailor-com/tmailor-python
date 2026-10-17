@@ -1,0 +1,121 @@
+{
+  "id": "wait_for_message_slow_final_read",
+  "description": "Review 17e SDK-01: the poll takes 2 s and finds a message; reading its body would take 10 s but only 3 s of the 5 s wait are left: the read is cut at the deadline and raises WaitTimeout.",
+  "clock": {
+    "wall_start": 1760342400
+  },
+  "client": {
+    "timeout": 30
+  },
+  "call": {
+    "op": "mailbox.wait_for_message",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "timeout": 5,
+      "since": 1760342399
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "limit": 100,
+          "since": 1760342399
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000002",
+              "from": {
+                "name": "Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "a@b.example",
+              "subject": "Code",
+              "received_at": 1760342401,
+              "expires_at": 1760428801,
+              "seen": false
+            }
+          ],
+          "next_cursor": null,
+          "total": 1
+        },
+        "delay": 2
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/message",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "message_id": "00000000000000000000000000000002"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "id": "00000000000000000000000000000002",
+          "from": {
+            "name": "Shop",
+            "address": "no-reply@shop.example"
+          },
+          "to": "a@b.example",
+          "subject": "Code",
+          "received_at": 1760342401,
+          "expires_at": 1760428801,
+          "seen": true,
+          "text": "Code 123456",
+          "html": null,
+          "body_available": true
+        },
+        "delay": 10
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "WaitTimeout",
+      "code": "WaitTimeout",
+      "status": null
+    },
+    "sleeps": [],
+    "elapsed_max": 5
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "id": "mailbox_messages_cursor_cycle",
+  "description": "Review 17d SDK-02: cursors form a cycle c1 -> c2 -> c1. The iterator stops with InvalidResponse.",
+  "call": {
+    "op": "mailbox.messages",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "page_size": 1
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "limit": 1
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000001",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Your code",
+              "received_at": 1760342300,
+              "expires_at": 1760428700,
+              "seen": false
+            }
+          ],
+          "next_cursor": "c1",
+          "total": 3
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "limit": 1,
+          "cursor": "c1"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000002",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Your code",
+              "received_at": 1760342200,
+              "expires_at": 1760428600,
+              "seen": false
+            }
+          ],
+          "next_cursor": "c2",
+          "total": 3
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "limit": 1,
+          "cursor": "c2"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000003",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Your code",
+              "received_at": 1760342100,
+              "expires_at": 1760428500,
+              "seen": false
+            }
+          ],
+          "next_cursor": "c1",
+          "total": 3
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "InvalidResponse",
+      "code": "InvalidResponse",
+      "status": null
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "mailboxes_create_explicit_idempotency_key",
+  "description": "A caller-supplied Idempotency-Key is sent unchanged; a replay is a normal success.",
+  "call": {
+    "op": "mailboxes.create",
+    "args": {
+      "idempotency_key": "order-778"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          },
+          "Idempotency-Key": "order-778"
+        },
+        "query": {},
+        "json": {}
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460",
+          "Idempotent-Replayed": "true"
+        },
+        "json": {
+          "email": "k3x9q2m7@example.net",
+          "domain": "example.net",
+          "is_user_domain": false,
+          "custom_name": false,
+          "created_at": 1760342400,
+          "message_count": 0,
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "web": {
+            "accesstoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+            "transfertoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-transfer.sig",
+            "reuse_url": "https://tmailor.com/reuse-temp-mail-address#accesstoken/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "email": "k3x9q2m7@example.net"
+    }
+  }
+}

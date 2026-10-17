@@ -1,0 +1,64 @@
+{
+  "id": "wait_for_message_slow_poll_deadline",
+  "description": "Review 17e SDK-01: a poll that takes 10 s inside a 3 s wait gets at most the 3 s left as its HTTP timeout; the timeout it causes is WaitTimeout (not Timeout), and the wait ends by the deadline.",
+  "clock": {
+    "wall_start": 1760342400
+  },
+  "client": {
+    "timeout": 30
+  },
+  "call": {
+    "op": "mailbox.wait_for_message",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "timeout": 3,
+      "since": 1760342399
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "limit": 100,
+          "since": 1760342399
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [],
+          "next_cursor": null,
+          "total": 0
+        },
+        "delay": 10
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "WaitTimeout",
+      "code": "WaitTimeout",
+      "status": null
+    },
+    "sleeps": [],
+    "elapsed_max": 3
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "id": "mailboxes_create_own_domain",
+  "description": "domain + name are sent in the JSON body.",
+  "call": {
+    "op": "mailboxes.create",
+    "args": {
+      "domain": "mail.example.com",
+      "name": "signup"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          },
+          "Idempotency-Key": {
+            "$present": true
+          }
+        },
+        "query": {},
+        "json": {
+          "domain": "mail.example.com",
+          "name": "signup"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "email": "signup@mail.example.com",
+          "domain": "mail.example.com",
+          "is_user_domain": true,
+          "custom_name": true,
+          "created_at": 1760342400,
+          "message_count": 0,
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "web": {
+            "accesstoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+            "transfertoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-transfer.sig",
+            "reuse_url": "https://tmailor.com/reuse-temp-mail-address#accesstoken/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "email": "signup@mail.example.com",
+      "domain": "mail.example.com",
+      "is_user_domain": true,
+      "custom_name": true,
+      "created_at": 1760342400,
+      "message_count": 0,
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+      "web": {
+        "accesstoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+        "transfertoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-transfer.sig",
+        "reuse_url": "https://tmailor.com/reuse-temp-mail-address#accesstoken/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "id": "usage_range",
+  "description": "GET /v1/usage with from/to as YYYY-MM-DD query parameters.",
+  "call": {
+    "op": "usage",
+    "args": {
+      "from": "2026-10-12",
+      "to": "2026-10-13"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/usage",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {
+          "from": "2026-10-12",
+          "to": "2026-10-13"
+        },
+        "json": null
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "from": "2026-10-12",
+          "to": "2026-10-13",
+          "timezone": "Asia/Ho_Chi_Minh",
+          "days": [
+            {
+              "date": "2026-10-12",
+              "req_total": 410,
+              "req_4xx": 3,
+              "req_5xx": 0,
+              "req_429": 0,
+              "req_ip_denied": 0,
+              "mailbox_created": 25,
+              "msg_list": 300,
+              "msg_read": 40
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "from": "2026-10-12",
+      "to": "2026-10-13",
+      "timezone": "Asia/Ho_Chi_Minh",
+      "days": [
+        {
+          "date": "2026-10-12",
+          "req_total": 410,
+          "req_4xx": 3,
+          "req_5xx": 0,
+          "req_429": 0,
+          "req_ip_denied": 0,
+          "mailbox_created": 25,
+          "msg_list": 300,
+          "msg_read": 40
+        }
+      ]
+    }
+  }
+}

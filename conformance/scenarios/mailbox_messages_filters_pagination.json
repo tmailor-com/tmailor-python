@@ -1,0 +1,150 @@
+{
+  "id": "mailbox_messages_filters_pagination",
+  "description": "Filters go in the body (from, subject, unread, since, limit); pages follow next_cursor.",
+  "call": {
+    "op": "mailbox.messages",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "unread": true,
+      "from": "shop",
+      "subject": "confirm",
+      "since": 1760342000,
+      "page_size": 2
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "unread": true,
+          "from": "shop",
+          "subject": "confirm",
+          "since": 1760342000,
+          "limit": 2
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000003",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Confirm your email address",
+              "received_at": 1760342480,
+              "expires_at": 1760428880,
+              "seen": false
+            },
+            {
+              "id": "00000000000000000000000000000002",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Confirm your email address",
+              "received_at": 1760342470,
+              "expires_at": 1760428870,
+              "seen": false
+            }
+          ],
+          "next_cursor": "MTc2",
+          "total": 3
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "unread": true,
+          "from": "shop",
+          "subject": "confirm",
+          "since": 1760342000,
+          "limit": 2,
+          "cursor": "MTc2"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000001",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Confirm your email address",
+              "received_at": 1760342460,
+              "expires_at": 1760428860,
+              "seen": false
+            }
+          ],
+          "next_cursor": null,
+          "total": 3
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": [
+      {
+        "id": "00000000000000000000000000000003",
+        "from": {
+          "name": "Example Shop",
+          "address": "no-reply@shop.example"
+        },
+        "seen": false
+      },
+      {
+        "id": "00000000000000000000000000000002"
+      },
+      {
+        "id": "00000000000000000000000000000001",
+        "received_at": 1760342460,
+        "expires_at": 1760428860
+      }
+    ]
+  }
+}

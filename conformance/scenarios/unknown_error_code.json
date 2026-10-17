@@ -1,0 +1,43 @@
+{
+  "id": "unknown_error_code",
+  "description": "An unknown error code falls back to the class of its HTTP status; code is kept.",
+  "call": {
+    "op": "me"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/me",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 400,
+        "headers": {},
+        "json": {
+          "error": {
+            "code": "SomethingNew",
+            "message": "New",
+            "description": "",
+            "request_id": "r1"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "BadRequest",
+      "code": "SomethingNew",
+      "status": 400
+    },
+    "sleep_count": 0
+  }
+}

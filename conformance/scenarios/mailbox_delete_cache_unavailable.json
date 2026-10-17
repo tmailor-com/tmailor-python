@@ -1,0 +1,56 @@
+{
+  "id": "mailbox_delete_cache_unavailable",
+  "description": "503 CacheUnavailable on delete is not retried.",
+  "call": {
+    "op": "mailbox.delete",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/delete",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+        }
+      },
+      "response": {
+        "status": 503,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "error": {
+            "code": "CacheUnavailable",
+            "message": "Cache unavailable",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60",
+            "reason": "cache_unavailable",
+            "secret_changed": false
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "CacheUnavailable",
+      "code": "CacheUnavailable",
+      "status": 503,
+      "secret_changed": false
+    },
+    "sleep_count": 0
+  }
+}

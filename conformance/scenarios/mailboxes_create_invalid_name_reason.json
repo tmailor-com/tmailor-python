@@ -1,0 +1,59 @@
+{
+  "id": "mailboxes_create_invalid_name_reason",
+  "description": "400 InvalidName carries error.reason.",
+  "call": {
+    "op": "mailboxes.create",
+    "args": {
+      "domain": "mail.example.com",
+      "name": "a..b"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "domain": "mail.example.com",
+          "name": "a..b"
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "error": {
+            "code": "InvalidName",
+            "message": "Invalid name",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60",
+            "reason": "double_dot"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "InvalidName",
+      "code": "InvalidName",
+      "status": 400,
+      "reason": "double_dot"
+    },
+    "sleep_count": 0
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "id": "mailboxes_create_no_domain_exhausts_retries",
+  "description": "503 NoDomainAvailable on every attempt: max_retries (2) retries, then NoDomainAvailable is raised.",
+  "call": {
+    "op": "mailboxes.create"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          },
+          "Idempotency-Key": {
+            "$capture": "idem"
+          }
+        },
+        "query": {},
+        "json": {}
+      },
+      "response": {
+        "status": 503,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "error": {
+            "code": "NoDomainAvailable",
+            "message": "No domain available",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          },
+          "Idempotency-Key": {
+            "$equals": "idem"
+          }
+        },
+        "query": {},
+        "json": {}
+      },
+      "response": {
+        "status": 503,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "error": {
+            "code": "NoDomainAvailable",
+            "message": "No domain available",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          },
+          "Idempotency-Key": {
+            "$equals": "idem"
+          }
+        },
+        "query": {},
+        "json": {}
+      },
+      "response": {
+        "status": 503,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "error": {
+            "code": "NoDomainAvailable",
+            "message": "No domain available",
+            "description": "desc",
+            "request_id": "last"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "NoDomainAvailable",
+      "code": "NoDomainAvailable",
+      "status": 503,
+      "request_id": "last"
+    },
+    "sleep_count": 2
+  }
+}

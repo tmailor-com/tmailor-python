@@ -1,0 +1,96 @@
+{
+  "id": "me_ok",
+  "description": "GET /v1/me; X-RateLimit-* headers are exposed as the last rate limit info.",
+  "call": {
+    "op": "me"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/me",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "user_id": 123456,
+          "key": {
+            "key_id": 42,
+            "prefix": "c0nf0rmance01"
+          },
+          "client_ip": "203.0.113.10",
+          "limits": {
+            "quota_total": 3000,
+            "quota_used": 120,
+            "quota_remaining": 2880,
+            "mailbox_count": 3,
+            "rate_per_min": 120,
+            "daily_req_cap": 0,
+            "max_ip": 5
+          },
+          "ip_allowlist": [
+            "203.0.113.10"
+          ],
+          "subscriptions": [
+            {
+              "plan": "starter_m",
+              "expires_at": 1762934400,
+              "period_end": 1762934400,
+              "quota": 3000,
+              "used": 120
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "user_id": 123456,
+      "key": {
+        "key_id": 42,
+        "prefix": "c0nf0rmance01"
+      },
+      "client_ip": "203.0.113.10",
+      "limits": {
+        "quota_total": 3000,
+        "quota_used": 120,
+        "quota_remaining": 2880,
+        "mailbox_count": 3,
+        "rate_per_min": 120,
+        "daily_req_cap": 0,
+        "max_ip": 5
+      },
+      "ip_allowlist": [
+        "203.0.113.10"
+      ],
+      "subscriptions": [
+        {
+          "plan": "starter_m",
+          "expires_at": 1762934400,
+          "period_end": 1762934400,
+          "quota": 3000,
+          "used": 120
+        }
+      ]
+    },
+    "rate_limit": {
+      "limit": 120,
+      "remaining": 119,
+      "reset": 1760342460
+    }
+  }
+}

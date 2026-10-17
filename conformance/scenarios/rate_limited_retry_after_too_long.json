@@ -1,0 +1,50 @@
+{
+  "id": "rate_limited_retry_after_too_long",
+  "description": "Retry-After above max_retry_wait (60 s): raised immediately.",
+  "call": {
+    "op": "me"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/me",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 429,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460",
+          "Retry-After": "120"
+        },
+        "json": {
+          "error": {
+            "code": "RateLimited",
+            "message": "Rate limited",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60",
+            "retry_after": 120
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "RateLimited",
+      "code": "RateLimited",
+      "status": 429,
+      "retry_after": 120
+    },
+    "sleep_count": 0
+  }
+}

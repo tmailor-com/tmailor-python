@@ -1,0 +1,44 @@
+{
+  "id": "auth_key_revoked",
+  "description": "401 KeyRevoked maps to its own error class and is not retried.",
+  "call": {
+    "op": "me"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/me",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 401,
+        "headers": {},
+        "json": {
+          "error": {
+            "code": "KeyRevoked",
+            "message": "KeyRevoked",
+            "description": "",
+            "request_id": "r-KeyRevoked"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "KeyRevoked",
+      "code": "KeyRevoked",
+      "status": 401,
+      "request_id": "r-KeyRevoked"
+    },
+    "sleep_count": 0
+  }
+}

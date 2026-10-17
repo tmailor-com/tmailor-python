@@ -1,0 +1,46 @@
+{
+  "id": "mailboxes_create_empty_body",
+  "description": "Review 17d SDK-06: a 201 with an empty object is not a Mailbox: InvalidResponse.",
+  "call": {
+    "op": "mailboxes.create",
+    "args": {
+      "idempotency_key": "conf-empty-1"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          },
+          "Idempotency-Key": "conf-empty-1"
+        },
+        "query": {},
+        "json": {}
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {}
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "InvalidResponse",
+      "code": "InvalidResponse",
+      "status": 201
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "me_without_key",
+  "description": "Review 17d SDK-07: without an API key an authenticated operation raises MissingKey (status null) before sending anything.",
+  "client": {
+    "api_key": ""
+  },
+  "call": {
+    "op": "me"
+  },
+  "exchanges": [],
+  "expect": {
+    "error": {
+      "class": "MissingKey",
+      "code": "MissingKey",
+      "status": null
+    },
+    "sleep_count": 0
+  }
+}

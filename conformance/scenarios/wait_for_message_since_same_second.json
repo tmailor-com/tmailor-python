@@ -1,0 +1,112 @@
+{
+  "id": "wait_for_message_since_same_second",
+  "description": "Review 17d SDK-05: since is exclusive (received_at > since). since = created_at - 1 catches a message received in the same second the address was created.",
+  "call": {
+    "op": "mailbox.wait_for_message",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "timeout": 30,
+      "since": 1760342399
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "since": 1760342399,
+          "limit": 100
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000005",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Your code",
+              "received_at": 1760342400,
+              "expires_at": 1760428800,
+              "seen": false
+            }
+          ],
+          "next_cursor": null,
+          "total": 1
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/message",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "message_id": "00000000000000000000000000000005"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "id": "00000000000000000000000000000005",
+          "from": {
+            "name": "Example Shop",
+            "address": "no-reply@shop.example"
+          },
+          "to": "k3x9q2m7@example.net",
+          "subject": "Your code",
+          "received_at": 1760342400,
+          "expires_at": 1760428800,
+          "seen": true,
+          "text": "Your code is 482913",
+          "html": null,
+          "body_available": true
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "id": "00000000000000000000000000000005",
+      "received_at": 1760342400
+    },
+    "otp": "482913",
+    "sleeps": []
+  }
+}

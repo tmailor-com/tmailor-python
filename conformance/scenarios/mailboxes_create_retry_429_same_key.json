@@ -1,0 +1,97 @@
+{
+  "id": "mailboxes_create_retry_429_same_key",
+  "description": "429 RateLimited: wait Retry-After seconds, retry with the SAME Idempotency-Key and the same body bytes.",
+  "call": {
+    "op": "mailboxes.create"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          },
+          "Idempotency-Key": {
+            "$capture": "idem"
+          }
+        },
+        "query": {},
+        "json": {}
+      },
+      "response": {
+        "status": 429,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "0",
+          "X-RateLimit-Reset": "1760342460",
+          "Retry-After": "3"
+        },
+        "json": {
+          "error": {
+            "code": "RateLimited",
+            "message": "Rate limited",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60",
+            "retry_after": 3
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          },
+          "Idempotency-Key": {
+            "$equals": "idem"
+          }
+        },
+        "query": {},
+        "json": {}
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "email": "k3x9q2m7@example.net",
+          "domain": "example.net",
+          "is_user_domain": false,
+          "custom_name": false,
+          "created_at": 1760342400,
+          "message_count": 0,
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "web": {
+            "accesstoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+            "transfertoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-transfer.sig",
+            "reuse_url": "https://tmailor.com/reuse-temp-mail-address#accesstoken/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+    },
+    "sleeps": [
+      3
+    ]
+  }
+}

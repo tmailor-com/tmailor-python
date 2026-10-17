@@ -1,0 +1,75 @@
+{
+  "id": "domains_ok",
+  "description": "GET /v1/domains lists only your own domains.",
+  "call": {
+    "op": "domains"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/domains",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "domain": "mail.example.com",
+              "is_user_domain": true,
+              "allow_custom_name": true,
+              "status": "verified",
+              "verified": true,
+              "usable": true
+            },
+            {
+              "domain": "inbox.example.org",
+              "is_user_domain": true,
+              "allow_custom_name": false,
+              "status": "pending",
+              "verified": false,
+              "usable": false
+            }
+          ],
+          "shared_domains_available": true
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "items": [
+        {
+          "domain": "mail.example.com",
+          "is_user_domain": true,
+          "allow_custom_name": true,
+          "status": "verified",
+          "verified": true,
+          "usable": true
+        },
+        {
+          "domain": "inbox.example.org",
+          "is_user_domain": true,
+          "allow_custom_name": false,
+          "status": "pending",
+          "verified": false,
+          "usable": false
+        }
+      ],
+      "shared_domains_available": true
+    }
+  }
+}

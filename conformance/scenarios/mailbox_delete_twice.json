@@ -1,0 +1,53 @@
+{
+  "id": "mailbox_delete_twice",
+  "description": "Deleting again: 404 MailboxNotFound.",
+  "call": {
+    "op": "mailbox.delete",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/delete",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "error": {
+            "code": "MailboxNotFound",
+            "message": "Mailbox not found",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "MailboxNotFound",
+      "code": "MailboxNotFound",
+      "status": 404
+    },
+    "sleep_count": 0
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "mailbox_info_invalid_type",
+  "description": "Review 17d SDK-06: created_at sent as a string is not coerced: InvalidResponse, body not kept in the error.",
+  "call": {
+    "op": "mailbox.info",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/info",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "email": "a1@example.net",
+          "domain": "example.net",
+          "is_user_domain": false,
+          "custom_name": false,
+          "created_at": "1760342400",
+          "message_count": 0,
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "web": {
+            "accesstoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+            "transfertoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-transfer.sig",
+            "reuse_url": "https://tmailor.com/reuse-temp-mail-address#accesstoken/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "InvalidResponse",
+      "code": "InvalidResponse",
+      "status": 200
+    }
+  }
+}

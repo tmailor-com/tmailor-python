@@ -1,0 +1,92 @@
+{
+  "id": "rate_limited_retry_after_zero",
+  "description": "Review 17d SDK-01: Retry-After 0 still waits the minimum delay (1 s) before the retry.",
+  "call": {
+    "op": "me"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/me",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 429,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460",
+          "Retry-After": "0"
+        },
+        "json": {
+          "error": {
+            "code": "RateLimited",
+            "message": "Rate limited",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60",
+            "retry_after": 0
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/me",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "user_id": 1,
+          "key": {
+            "key_id": 1,
+            "prefix": "c0nf0rmance01"
+          },
+          "client_ip": "203.0.113.10",
+          "limits": {
+            "quota_total": 1,
+            "quota_used": 0,
+            "quota_remaining": 1,
+            "mailbox_count": 0,
+            "rate_per_min": 120,
+            "daily_req_cap": 0,
+            "max_ip": 1
+          },
+          "ip_allowlist": [
+            "203.0.113.10"
+          ],
+          "subscriptions": []
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "user_id": 1
+    },
+    "sleeps": [
+      1
+    ]
+  }
+}

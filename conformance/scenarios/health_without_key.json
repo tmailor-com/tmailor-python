@@ -1,0 +1,42 @@
+{
+  "id": "health_without_key",
+  "description": "Review 17d SDK-07: health is public. A client without an API key can call it and no Authorization header is sent.",
+  "client": {
+    "api_key": ""
+  },
+  "call": {
+    "op": "health"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/health",
+        "headers": {
+          "Authorization": {
+            "$absent": true
+          },
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 200,
+        "headers": {},
+        "json": {
+          "status": "ok",
+          "time": 1760342400,
+          "version": "v1"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "status": "ok"
+    }
+  }
+}

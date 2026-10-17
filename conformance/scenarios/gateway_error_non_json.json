@@ -1,0 +1,80 @@
+{
+  "id": "gateway_error_non_json",
+  "description": "A 502 HTML page from a proxy becomes an InternalServerError with code HTTP502 (safe GET: retried).",
+  "call": {
+    "op": "domains"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/domains",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 502,
+        "headers": {
+          "Content-Type": "text/html"
+        },
+        "body": "<html>Bad gateway</html>"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/domains",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 502,
+        "headers": {
+          "Content-Type": "text/html"
+        },
+        "body": "<html>Bad gateway</html>"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/domains",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 502,
+        "headers": {
+          "Content-Type": "text/html"
+        },
+        "body": "<html>Bad gateway</html>"
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "InternalServerError",
+      "code": "HTTP502",
+      "status": 502
+    },
+    "sleep_count": 2
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "read_error_unsafe_not_retried",
+  "description": "A read error after sending an unsafe POST (delete) is NOT retried: ConnectionError.",
+  "call": {
+    "op": "mailbox.delete",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/delete",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+        }
+      },
+      "response": {
+        "network_error": "read"
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "ConnectionError",
+      "code": "ConnectionError",
+      "status": null
+    },
+    "sleep_count": 0
+  }
+}

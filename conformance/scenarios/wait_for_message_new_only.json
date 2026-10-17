@@ -1,0 +1,271 @@
+{
+  "id": "wait_for_message_new_only",
+  "description": "Records ALL ids present at start (baseline without filters, Review 17d SDK-08), polls with the filter (1 s, then 1.5 s), returns the first NEW message with its body.",
+  "clock": {
+    "wall_start": 1760342400
+  },
+  "call": {
+    "op": "mailbox.wait_for_message",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "timeout": 30,
+      "from": "shop"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "limit": 100
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000001",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Old mail",
+              "received_at": 1760342300,
+              "expires_at": 1760428700,
+              "seen": false
+            }
+          ],
+          "next_cursor": null,
+          "total": 1
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "from": "shop",
+          "limit": 100
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000001",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Old mail",
+              "received_at": 1760342300,
+              "expires_at": 1760428700,
+              "seen": false
+            }
+          ],
+          "next_cursor": null,
+          "total": 1
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "from": "shop",
+          "limit": 100
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000001",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Old mail",
+              "received_at": 1760342300,
+              "expires_at": 1760428700,
+              "seen": false
+            }
+          ],
+          "next_cursor": null,
+          "total": 1
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "from": "shop",
+          "limit": 100
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "id": "00000000000000000000000000000002",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Your code",
+              "received_at": 1760342410,
+              "expires_at": 1760428810,
+              "seen": false
+            },
+            {
+              "id": "00000000000000000000000000000001",
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Old mail",
+              "received_at": 1760342300,
+              "expires_at": 1760428700,
+              "seen": false
+            }
+          ],
+          "next_cursor": null,
+          "total": 2
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/message",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "message_id": "00000000000000000000000000000002"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "id": "00000000000000000000000000000002",
+          "from": {
+            "name": "Example Shop",
+            "address": "no-reply@shop.example"
+          },
+          "to": "k3x9q2m7@example.net",
+          "subject": "Your code",
+          "received_at": 1760342410,
+          "expires_at": 1760428810,
+          "seen": true,
+          "text": "Code: 7731",
+          "html": null,
+          "body_available": true
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "id": "00000000000000000000000000000002",
+      "subject": "Your code",
+      "text": "Code: 7731"
+    },
+    "otp": "7731",
+    "sleeps": [
+      1,
+      1.5
+    ]
+  }
+}

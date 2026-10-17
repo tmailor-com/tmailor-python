@@ -1,0 +1,44 @@
+{
+  "id": "auth_account_locked",
+  "description": "403 AccountLocked maps to its own error class and is not retried.",
+  "call": {
+    "op": "me"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/me",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 403,
+        "headers": {},
+        "json": {
+          "error": {
+            "code": "AccountLocked",
+            "message": "AccountLocked",
+            "description": "",
+            "request_id": "r-AccountLocked"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "AccountLocked",
+      "code": "AccountLocked",
+      "status": 403,
+      "request_id": "r-AccountLocked"
+    },
+    "sleep_count": 0
+  }
+}

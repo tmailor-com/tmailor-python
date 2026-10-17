@@ -1,0 +1,40 @@
+{
+  "id": "mailboxes_list_empty",
+  "description": "Empty account.",
+  "call": {
+    "op": "mailboxes.list"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/mailboxes",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {
+          "limit": "50"
+        },
+        "json": null
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [],
+          "next_cursor": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": []
+  }
+}

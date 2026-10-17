@@ -1,0 +1,92 @@
+{
+  "id": "health_degraded_503",
+  "description": "A degraded service answers 503 (no error code in the body). Safe GET: retried, then raised. Review 17d SDK-07: health is public, no Authorization header is sent.",
+  "call": {
+    "op": "health"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/health",
+        "headers": {
+          "Authorization": {
+            "$absent": true
+          },
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 503,
+        "headers": {},
+        "json": {
+          "status": "degraded",
+          "time": 1760342400,
+          "version": "v1"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/health",
+        "headers": {
+          "Authorization": {
+            "$absent": true
+          },
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 503,
+        "headers": {},
+        "json": {
+          "status": "degraded",
+          "time": 1760342400,
+          "version": "v1"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/health",
+        "headers": {
+          "Authorization": {
+            "$absent": true
+          },
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {},
+        "json": null
+      },
+      "response": {
+        "status": 503,
+        "headers": {},
+        "json": {
+          "status": "degraded",
+          "time": 1760342400,
+          "version": "v1"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "ServiceUnavailable",
+      "code": "HTTP503",
+      "status": 503
+    },
+    "sleep_count": 2
+  }
+}

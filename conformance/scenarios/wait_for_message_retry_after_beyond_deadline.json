@@ -1,0 +1,61 @@
+{
+  "id": "wait_for_message_retry_after_beyond_deadline",
+  "description": "Review 17d SDK-01: with default retries, a 429 with Retry-After 30 inside a 5 s wait is neither retried by the transport nor slept: WaitTimeout right away.",
+  "call": {
+    "op": "mailbox.wait_for_message",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "timeout": 5,
+      "since": 1760342399
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "since": 1760342399,
+          "limit": 100
+        }
+      },
+      "response": {
+        "status": 429,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460",
+          "Retry-After": "30"
+        },
+        "json": {
+          "error": {
+            "code": "RateLimited",
+            "message": "Rate limited",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60",
+            "retry_after": 30
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "WaitTimeout",
+      "code": "WaitTimeout",
+      "status": null
+    },
+    "sleeps": []
+  }
+}

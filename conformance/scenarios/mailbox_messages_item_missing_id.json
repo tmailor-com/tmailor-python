@@ -1,0 +1,62 @@
+{
+  "id": "mailbox_messages_item_missing_id",
+  "description": "Review 17d SDK-06: a message without id is not turned into id=\"\": InvalidResponse.",
+  "call": {
+    "op": "mailbox.messages",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig"
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/messages",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "limit": 50
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "100",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "items": [
+            {
+              "from": {
+                "name": "Example Shop",
+                "address": "no-reply@shop.example"
+              },
+              "to": "k3x9q2m7@example.net",
+              "subject": "Your code",
+              "received_at": 1760342300,
+              "expires_at": 1760428700,
+              "seen": false
+            }
+          ],
+          "next_cursor": null,
+          "total": 1
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "InvalidResponse",
+      "code": "InvalidResponse",
+      "status": 200
+    }
+  }
+}

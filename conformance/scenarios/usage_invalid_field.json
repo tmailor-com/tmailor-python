@@ -1,0 +1,53 @@
+{
+  "id": "usage_invalid_field",
+  "description": "400 InvalidField is raised as is (not retried).",
+  "call": {
+    "op": "usage",
+    "args": {
+      "from": "2026-13-01"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/v1/usage",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          }
+        },
+        "query": {
+          "from": "2026-13-01"
+        },
+        "json": null
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "error": {
+            "code": "InvalidField",
+            "message": "from must be a date YYYY-MM-DD",
+            "description": "desc",
+            "request_id": "3f2a9c1d7e5b4a60"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "error": {
+      "class": "InvalidField",
+      "code": "InvalidField",
+      "status": 400,
+      "message": "from must be a date YYYY-MM-DD"
+    },
+    "sleep_count": 0
+  }
+}
