@@ -36,7 +36,8 @@ tmailor = "tmailor.cli:run"
 dev = ["pytest>=7", "pytest-asyncio>=0.21", "pytest-cov", "mypy>=1.5", "ruff>=0.5", "build", "pyyaml>=6"]
 
 [project.urls]
-Homepage = "https://platform.tmailor.com"
+Homepage = "https://tmailor.com"
+Platform = "https://platform.tmailor.com"
 Documentation = "https://platform.tmailor.com/docs"
 Support = "https://tmailor.com/contact-us"
 Repository = "https://github.com/tmailor-com/tmailor-python"
