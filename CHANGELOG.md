@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-10-17)
 
 First version, for Open API v1 (spec 1.2.0). The history below records the changes made before the first release.
 
