@@ -22,7 +22,7 @@ from typing import Any, Dict, Iterator, List, Mapping, Optional, Tuple
 
 from . import _schema as S
 from ._core import mask_token
-from ._extract import extract_links, extract_otp
+from ._extract import extract_codes, extract_links, extract_otp
 from .errors import InvalidResponseError
 
 __all__ = [
@@ -228,6 +228,8 @@ class Message:
     html: Optional[str] = field(default=None, repr=False)
     body_available: Optional[bool] = None
     raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    # API 1.3.0: "otp" / "codes" / "links" found by the server, only the keys the response had (None: none of them).
+    found: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
 
     @classmethod
     def from_api(cls, data: Any, path: str = "$", *, with_body: bool = False) -> Message:
@@ -236,10 +238,19 @@ class Message:
         d = S.obj(data, path)
         f = S.req_obj(d, "from", path)
         fp = f"{path}.from"
+        found: Optional[Dict[str, Any]] = None
         if with_body:
             text = S.req_str_or_none(d, "text", path)
             html = S.req_str_or_none(d, "html", path)
             body_available: Optional[bool] = S.req_bool(d, "body_available", path)
+            # API 1.3.0 fields. Optional here so the SDK keeps working with an older server (local fallback then).
+            found = {}
+            if "otp" in d:
+                found["otp"] = S.req_str_or_none(d, "otp", path)
+            for k in ("codes", "links"):
+                if k in d:
+                    found[k] = S.req_str_list(d, k, path)
+            found = found or None
         else:
             text = html = None
             body_available = None
@@ -260,6 +271,7 @@ class Message:
             html=html,
             body_available=body_available,
             raw=dict(d),
+            found=found,
         )
 
     @classmethod
@@ -271,11 +283,26 @@ class Message:
         return self.text is not None or self.html is not None
 
     def otp(self) -> Optional[str]:
-        """Best-effort one-time code from the subject and body (``None`` when unsure). Runs locally."""
+        """Best-effort one-time code from the subject and body (``None`` when unsure).
+
+        A message read with its body (``Mailbox.message`` / ``wait_for_message``) returns the code the API found
+        (``otp`` field, API 1.3.0). A message from the list, or a response without that field, is scanned locally
+        with the same rules (the subject only when there is no body)."""
+        if self.found is not None and "otp" in self.found:
+            return self.found["otp"]  # type: ignore[no-any-return]
         return extract_otp(self.subject, self.text, self.html)
 
+    def codes(self) -> List[str]:
+        """Every distinct code-like value, subject first (from the API when it sent ``codes``, else local)."""
+        if self.found is not None and "codes" in self.found:
+            return list(self.found["codes"])
+        return extract_codes(self.subject, self.text, self.html)
+
     def links(self) -> List[str]:
-        """http(s) links of the body (HTML ``href`` first, then plain text), without duplicates."""
+        """http(s) links of the body (HTML ``href`` first, then plain text), without duplicates (from the API when it
+        sent ``links``, else local)."""
+        if self.found is not None and "links" in self.found:
+            return list(self.found["links"])
         return extract_links(self.text, self.html)
 
 

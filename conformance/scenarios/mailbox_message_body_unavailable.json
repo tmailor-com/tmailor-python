@@ -48,7 +48,10 @@
           "seen": true,
           "text": null,
           "html": null,
-          "body_available": false
+          "body_available": false,
+          "otp": null,
+          "codes": [],
+          "links": []
         }
       }
     }

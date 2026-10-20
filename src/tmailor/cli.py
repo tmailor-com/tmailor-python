@@ -717,8 +717,10 @@ class App:
 # ── commands
 def message_dict(m: Message) -> Dict[str, Any]:
     d: Dict[str, Any] = dict(m.raw)
-    d["otp"] = m.otp() if m.has_body else None
-    d["links"] = m.links() if m.has_body else []
+    # Review 20a CORE-05: read/wait messages only. Body expired ⇒ the API still sends otp/codes from the subject; keep them.
+    d["otp"] = m.otp()
+    d["codes"] = m.codes()
+    d["links"] = m.links()
     return d
 
 

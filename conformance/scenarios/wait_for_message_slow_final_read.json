@@ -103,7 +103,12 @@
           "seen": true,
           "text": "Code 123456",
           "html": null,
-          "body_available": true
+          "body_available": true,
+          "otp": "123456",
+          "codes": [
+            "123456"
+          ],
+          "links": []
         },
         "delay": 10
       }

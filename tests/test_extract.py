@@ -158,3 +158,76 @@ def test_links_parser_rejects_lookalikes(html: str, expected: list) -> None:
 def test_links_visible_text_url_kept() -> None:
     html = "<p>Open https://good.example/text then <a href='https://good.example/a'>this</a></p>"
     assert extract_links(None, html) == ["https://good.example/a", "https://good.example/text"]
+
+
+# ── Review 20a: same table in system/api_openapi/tests/extract_test.php (server extractor)
+def test_otp_many_candidates_and_keywords_is_fast() -> None:
+    import time
+
+    body = "code 1234 " * 20000  # 200,000 characters: 20,000 candidates and 20,000 keywords
+    t0 = time.monotonic()
+    assert extract_otp("x", body) == "1234"
+    assert time.monotonic() - t0 < 2.0
+
+
+@pytest.mark.parametrize(
+    ("subject", "text", "expected"),
+    [
+        ("Code", "Your code is ٤٥٦٧٨٩", "٤٥٦٧٨٩"),  # Arabic-Indic
+        ("Hi", "x" * 200_001 + " code 4455", None),  # past the 200,000-character limit
+        ("Hi", "x" * 150_000 + " code 4455", "4455"),  # long word run with no "@": linear e-mail mask
+    ],
+)
+def test_otp_unicode_and_limits(subject: str, text: str, expected: Optional[str]) -> None:
+    assert extract_otp(subject, text) == expected
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("Open https://] or https://?x or https://. now", []),
+        ("Go to https://good.example/a?b=1. Thanks", ["https://good.example/a?b=1"]),
+        ("See https://a.example/x\u00a0more", ["https://a.example/x"]),  # NBSP ends a URL
+    ],
+)
+def test_links_text_urls_need_a_host(text: str, expected: list) -> None:
+    assert extract_links(text, None) == expected
+
+
+def test_links_capped_at_100() -> None:
+    text = " ".join(f"https://h{i}.example/" for i in range(150))
+    links = extract_links(text, None)
+    assert len(links) == 100 and links[0] == "https://h0.example/" and links[-1] == "https://h99.example/"
+
+
+def test_codes_capped_and_ordered() -> None:
+    from tmailor import extract_codes
+
+    assert extract_codes("x", "Ticket 4410 created. Your PIN is 0042.") == ["4410", "0042"]
+    assert len(extract_codes("x", " ".join(str(100000 + i) for i in range(30)))) == 20
+
+
+def test_server_values_win_and_cli_keeps_subject_codes() -> None:
+    from tmailor.cli import message_dict
+
+    m = Message.from_api(
+        {
+            "id": "c" * 32,
+            "from": {"name": "n", "address": "a@b.c"},
+            "to": "x@y.z",
+            "subject": "Your code is 5566",
+            "received_at": 1,
+            "expires_at": 2,
+            "seen": True,
+            "text": None,
+            "html": None,
+            "body_available": False,
+            "otp": "5566",
+            "codes": ["5566"],
+            "links": [],
+        },
+        with_body=True,
+    )
+    assert (m.otp(), m.codes(), m.links()) == ("5566", ["5566"], [])
+    d = message_dict(m)  # Review 20a CORE-05: body expired, the subject code stays in the JSON output
+    assert (d["otp"], d["codes"], d["links"]) == ("5566", ["5566"], [])

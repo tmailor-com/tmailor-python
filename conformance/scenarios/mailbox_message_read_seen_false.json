@@ -48,7 +48,12 @@
           "seen": false,
           "text": "Your verification code is 482913.",
           "html": "<p>Your verification code is <b>482913</b>.</p>",
-          "body_available": true
+          "body_available": true,
+          "otp": "482913",
+          "codes": [
+            "482913"
+          ],
+          "links": []
         }
       }
     }

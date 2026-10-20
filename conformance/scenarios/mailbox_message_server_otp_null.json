@@ -1,0 +1,87 @@
+{
+  "id": "mailbox_message_server_otp_null",
+  "description": "The SDK returns the server's otp/codes/links as they are: otp null from the API stays null even when the text looks like it has a code (no local guess), codes/links are taken from the response, not from the body.",
+  "call": {
+    "op": "mailbox.message",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+    "args": {
+      "message_id": "00000000000000000000000000000001"
+    }
+  },
+  "exchanges": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/v1/mailbox/message",
+        "headers": {
+          "Authorization": "Bearer tmk_live_c0nf0rmance01_TESTSECRETdoNotUseAnywhere0000000000000",
+          "User-Agent": {
+            "$regex": "^tmailor-[a-z0-9]+/\\d+\\.\\d+\\.\\d+"
+          },
+          "Content-Type": {
+            "$regex": "^application/json"
+          }
+        },
+        "query": {},
+        "json": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.conformance-token-A.sig",
+          "message_id": "00000000000000000000000000000001"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "X-RateLimit-Limit": "120",
+          "X-RateLimit-Remaining": "119",
+          "X-RateLimit-Reset": "1760342460"
+        },
+        "json": {
+          "id": "00000000000000000000000000000001",
+          "from": {
+            "name": "Example Shop",
+            "address": "no-reply@shop.example"
+          },
+          "to": "k3x9q2m7@example.net",
+          "subject": "Confirm your email address",
+          "received_at": 1760342460,
+          "expires_at": 1760428860,
+          "seen": true,
+          "text": "Order 482913 shipped. Track it at https://shop.example/track",
+          "html": null,
+          "body_available": true,
+          "otp": null,
+          "codes": [
+            "482913"
+          ],
+          "links": [
+            "https://shop.example/track?from=api"
+          ]
+        }
+      }
+    }
+  ],
+  "expect": {
+    "result": {
+      "id": "00000000000000000000000000000001",
+      "from": {
+        "name": "Example Shop",
+        "address": "no-reply@shop.example"
+      },
+      "to": "k3x9q2m7@example.net",
+      "subject": "Confirm your email address",
+      "received_at": 1760342460,
+      "expires_at": 1760428860,
+      "seen": true,
+      "text": "Order 482913 shipped. Track it at https://shop.example/track",
+      "html": null,
+      "body_available": true
+    },
+    "otp": null,
+    "codes": [
+      "482913"
+    ],
+    "links": [
+      "https://shop.example/track?from=api"
+    ]
+  }
+}

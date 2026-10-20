@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.2.0 (2026-10-20)
+
+For Open API spec 1.3.0 (2026-10-20): the API now finds the one-time code, the code-like values and the links of a
+message itself (`otp`, `codes`, `links` in `POST /v1/mailbox/message`).
+
+- `Message.otp()` and `Message.links()` return the values found by the API for a message read with its body
+  (`Mailbox.message`, `wait_for_message`). `otp: null` from the API is returned as `None` (no local guess). Message
+  list items and responses without these fields still use the local extractor.
+- New `Message.codes()` and `tmailor.extract_codes()`: every distinct code-like value, subject first (at most 20).
+- The CLI `--json` output of a message also has `codes`.
+- The CLI `--json` output of `read` and `wait` keeps `otp` and `codes` from the subject when the body is no
+  longer available.
+- Local extractor fixes (same rules and limits as the server): a long run of letters or digits without "@" no longer
+  takes quadratic time in the e-mail mask (about 9 s for 50,000 characters in 0.1.0); scoring is O(candidates x
+  log keywords) instead of candidates x keywords; each source is cut to its first 200,000 characters; at most 100
+  links and 20 codes; a link written in the text must still have a host after trailing punctuation is removed
+  (`https://]` is no longer returned).
+
 ## 0.1.0 (2026-10-17)
 
 First version, for Open API v1 (spec 1.2.0). The history below records the changes made before the first release.

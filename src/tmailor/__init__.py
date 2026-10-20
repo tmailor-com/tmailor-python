@@ -7,7 +7,7 @@ Server-side only: the API accepts requests only from the IP addresses in your ac
 from ._async_client import AsyncClient, AsyncMailbox, AsyncMailboxes, AsyncMailboxPage
 from ._client import Client, Mailbox, Mailboxes, MailboxPage
 from ._core import BaseURLError, RateLimitInfo
-from ._extract import extract_links, extract_otp
+from ._extract import extract_codes, extract_links, extract_otp
 from ._version import __version__
 from .errors import (
     AccountLockedError,
@@ -74,6 +74,7 @@ __all__ = [
     "AsyncMailboxPage",
     "RateLimitInfo",
     "extract_otp",
+    "extract_codes",
     "extract_links",
     # models
     "Health",

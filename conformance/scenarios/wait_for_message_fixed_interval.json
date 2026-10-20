@@ -197,7 +197,10 @@
           "seen": true,
           "text": "x",
           "html": null,
-          "body_available": true
+          "body_available": true,
+          "otp": null,
+          "codes": [],
+          "links": []
         }
       }
     }

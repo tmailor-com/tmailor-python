@@ -200,16 +200,21 @@ limit matters.
 
 ```python
 msg.otp()  # "482913", or None when there is no confident answer
+msg.codes()  # ["482913"]: every code-like value, use it when otp() is None or picks the wrong one
 msg.links()  # ["https://example.com/verify?t=..."]
 ```
 
-The API does not extract codes or links; these helpers run locally. `otp()` looks for 4- to 8-digit codes
+For a message read with its body (`box.message(id)` or `wait_for_message`), these values come from the API
+(fields `otp`, `codes` and `links`, API 1.3.0), so every language and plain `curl` get the same answer. For a
+message from the list (subject only), or a server without those fields, the SDK applies the same rules locally.
+`otp()` looks for 4- to 8-digit codes
 (including forms such as `123 456` and `G-123456`) or 4- to 8-character uppercase codes containing both letters
 and digits, such as `A7K29Q`, preferably near words such as "code", "OTP", "verification", or "PIN". It skips candidates inside URLs,
 email addresses, dates, amounts, and similar text where possible. Without a nearby keyword, it returns a value
 only when there is one distinct six-digit candidate and no other eligible numeric candidate. Always handle
 `None`. `links()` returns unique absolute HTTP and HTTPS URLs. The standalone helpers
-`tmailor.extract_otp(subject, text, html)` and `tmailor.extract_links(text, html)` work on any string.
+`tmailor.extract_otp(subject, text, html)`, `tmailor.extract_codes(subject, text, html)` and
+`tmailor.extract_links(text, html)` work on any string.
 
 ## Account
 

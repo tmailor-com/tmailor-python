@@ -251,7 +251,12 @@
           "seen": true,
           "text": "Code: 7731",
           "html": null,
-          "body_available": true
+          "body_available": true,
+          "otp": "7731",
+          "codes": [
+            "7731"
+          ],
+          "links": []
         }
       }
     }

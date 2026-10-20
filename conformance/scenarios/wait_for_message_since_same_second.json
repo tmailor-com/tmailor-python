@@ -96,7 +96,12 @@
           "seen": true,
           "text": "Your code is 482913",
           "html": null,
-          "body_available": true
+          "body_available": true,
+          "otp": "482913",
+          "codes": [
+            "482913"
+          ],
+          "links": []
         }
       }
     }

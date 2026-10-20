@@ -6,13 +6,13 @@ the exact HTTP requests the SDK must send, canned responses to return, and what 
 
 The Python runner is `../python/tests/conformance_runner.py`; port it first when you start a new SDK.
 
-## Scenarios (78 files)
+## Scenarios (80 files)
 
 - Auth and keys: `auth_account_locked`, `auth_invalid_key`, `auth_ip_not_allowed`, `auth_key_revoked`, `auth_missing_key`
 - Health: `health_degraded_503`, `health_ok`, `health_without_key`
 - Account (`me`, `domains`, `usage`): `domains_ok`, `me_ok`, `me_without_key`, `usage_default`, `usage_invalid_field`, `usage_range`
 - Create and list addresses: `mailboxes_create_customnamenotallowed`, `mailboxes_create_empty_body`, `mailboxes_create_explicit_idempotency_key`, `mailboxes_create_idempotency_conflict`, `mailboxes_create_invalid_name_reason`, `mailboxes_create_invaliddomain`, `mailboxes_create_mailbox_exists`, `mailboxes_create_name_used_on_website`, `mailboxes_create_max_retries_zero`, `mailboxes_create_network_error_retry`, `mailboxes_create_no_domain_exhausts_retries`, `mailboxes_create_own_domain`, `mailboxes_create_quota_exceeded`, `mailboxes_create_random`, `mailboxes_create_retry_429_same_key`, `mailboxes_create_retry_503_idempotency_unavailable`, `mailboxes_list_cursor_repeat`, `mailboxes_list_empty`, `mailboxes_list_limit`, `mailboxes_list_null_tokens`, `mailboxes_list_pagination`
-- One address: `mailbox_clear`, `mailbox_delete`, `mailbox_delete_cache_unavailable`, `mailbox_delete_message`, `mailbox_delete_message_429_retried`, `mailbox_delete_twice`, `mailbox_info`, `mailbox_info_invalid_type`, `mailbox_info_not_found`, `mailbox_info_retry_500`, `mailbox_message_body_unavailable`, `mailbox_message_not_found`, `mailbox_message_read`, `mailbox_messages_cursor_cycle`, `mailbox_messages_default`, `mailbox_messages_filters_pagination`, `mailbox_messages_item_missing_id`, `mailbox_messages_seen_not_boolean`
+- One address: `mailbox_clear`, `mailbox_delete`, `mailbox_delete_cache_unavailable`, `mailbox_delete_message`, `mailbox_delete_message_429_retried`, `mailbox_delete_twice`, `mailbox_info`, `mailbox_info_invalid_type`, `mailbox_info_not_found`, `mailbox_info_retry_500`, `mailbox_message_body_unavailable`, `mailbox_message_not_found`, `mailbox_message_read`, `mailbox_message_read_seen_false`, `mailbox_message_server_otp_null`, `mailbox_messages_cursor_cycle`, `mailbox_messages_default`, `mailbox_messages_filters_pagination`, `mailbox_messages_item_missing_id`, `mailbox_messages_seen_not_boolean`
 - wait_for_message: `wait_for_message_429_inside_wait`, `wait_for_message_baseline_cursor_repeat`, `wait_for_message_baseline_unfiltered`, `wait_for_message_fixed_interval`, `wait_for_message_new_only`, `wait_for_message_rate_limit_slowdown`, `wait_for_message_retry_after_beyond_deadline`, `wait_for_message_retry_after_zero`, `wait_for_message_since`, `wait_for_message_since_same_second`, `wait_for_message_slow_final_read`, `wait_for_message_slow_poll_deadline`, `wait_for_message_timeout`, `wait_for_message_timeout_zero`
 - Transport, retries and errors: `connect_error_retried_any`, `daily_cap_not_retried`, `gateway_error_non_json`, `internal_error_get_retried`, `rate_limited_exhausts_retries`, `rate_limited_retry_after_too_long`, `rate_limited_retry_after_zero`, `read_error_unsafe_not_retried`, `success_body_not_json`, `timeout_safe_retried_then_raised`, `unknown_error_code`
 
@@ -96,6 +96,12 @@ query string.
   when the call returns or raises.
 - `mailbox`: `{token}` the mailbox object must hold afterwards (create); `null` = no token.
 - `otp`: expected `Message.otp()` of the result.
+- `codes`, `links`: expected `Message.codes()` / `Message.links()` of the result.
+
+Since API 1.3.0 every `POST /v1/mailbox/message` response carries `otp`, `codes` and `links` found by the server
+(`system/api_openapi/src/extract.php`). An SDK returns these values as they are (`otp: null` stays `null`, see
+`mailbox_message_server_otp_null`); it does not need its own extractor or HTML parser. A local fallback (as in
+Python, for list items and older servers) is optional.
 
 ### Clock
 

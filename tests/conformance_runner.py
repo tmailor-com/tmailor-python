@@ -355,6 +355,10 @@ def check(
         assert_subset(sid, exp["result"], to_plain(outcome))
         if "otp" in exp:
             assert outcome.otp() == exp["otp"], f"{sid}: otp {outcome.otp()!r} != {exp['otp']!r}"
+        for k in ("codes", "links"):  # API 1.3.0: values found by the server
+            if k in exp:
+                got = getattr(outcome, k)()
+                assert got == exp[k], f"{sid}: {k} {got!r} != {exp[k]!r}"
     if "sleeps" in exp:
         assert len(clock.sleeps) == len(exp["sleeps"]), f"{sid}: sleeps {clock.sleeps} != {exp['sleeps']}"
         for a, b in zip(clock.sleeps, exp["sleeps"]):
